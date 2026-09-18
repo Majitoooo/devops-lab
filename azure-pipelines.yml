@@ -1,0 +1,20 @@
+trigger:
+- main
+
+pool:
+  vmImage: ubuntu-latest
+
+stages:
+- stage: DEV
+  displayName: "Build y Deploy DEV"
+  jobs:
+  - job: BuildAndDeployDEV
+    steps:
+    - script: npm ci
+      displayName: "Instalar dependencias"
+
+    - script: npm run build
+      displayName: "Construir aplicación"
+
+    - script: echo "Despliegue a DEV (pendiente de configurar destino)"
+      displayName: "Deploy DEV"
