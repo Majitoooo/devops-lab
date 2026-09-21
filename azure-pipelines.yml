@@ -19,6 +19,13 @@ stages:
     - script: npm run build
       displayName: "Construir aplicación"
 
+    - task: PublishBuildArtifacts@1
+      inputs:
+        PathtoPublish: 'dist'
+        ArtifactName: 'app-dist'
+        publishLocation: 'Container'
+      displayName: "Publicar artefacto dist/"
+
 - stage: DEV
   displayName: "Deploy DEV"
   dependsOn: CI
@@ -26,5 +33,16 @@ stages:
   jobs:
   - job: DeployDEV
     steps:
-    - script: echo "Despliegue a DEV (pendiente de configurar destino)"
+    - task: DownloadBuildArtifacts@1
+      inputs:
+        buildType: 'current'
+        downloadType: 'single'
+        artifactName: 'app-dist'
+        downloadPath: '$(System.ArtifactsDirectory)'
+      displayName: "Descargar artefacto"
+
+    - script: |
+        echo "Contenido del artefacto descargado:"
+        ls -la $(System.ArtifactsDirectory)/app-dist
+        echo "Despliegue a DEV (pendiente de configurar destino real)"
       displayName: "Deploy DEV"
