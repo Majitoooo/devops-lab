@@ -5,16 +5,26 @@ pool:
   vmImage: ubuntu-latest
 
 stages:
-- stage: DEV
-  displayName: "Build y Deploy DEV"
+- stage: CI
+  displayName: "Integración Continua"
   jobs:
-  - job: BuildAndDeployDEV
+  - job: BuildAndTest
     steps:
     - script: npm ci
       displayName: "Instalar dependencias"
 
+    - script: npm test
+      displayName: "Ejecutar pruebas"
+
     - script: npm run build
       displayName: "Construir aplicación"
 
+- stage: DEV
+  displayName: "Deploy DEV"
+  dependsOn: CI
+  condition: succeeded()
+  jobs:
+  - job: DeployDEV
+    steps:
     - script: echo "Despliegue a DEV (pendiente de configurar destino)"
       displayName: "Deploy DEV"
