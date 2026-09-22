@@ -41,8 +41,9 @@ stages:
         downloadPath: '$(System.ArtifactsDirectory)'
       displayName: "Descargar artefacto"
 
-    - script: |
-        echo "Contenido del artefacto descargado:"
-        ls -la $(System.ArtifactsDirectory)/app-dist
-        echo "Despliegue a DEV (pendiente de configurar destino real)"
-      displayName: "Deploy DEV"
+    - task: AzureStaticWebApp@0
+      inputs:
+        app_location: '$(System.ArtifactsDirectory)/app-dist'
+        skip_app_build: true
+        azure_static_web_apps_api_token: '$(AZURE_STATIC_WEB_APPS_API_TOKEN)'
+      displayName: "Desplegar a Azure Static Web Apps"
