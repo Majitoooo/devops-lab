@@ -9,6 +9,15 @@ function App() {
 
   return (
     <>
+      <div style={{
+        backgroundColor: '#ffcc00',
+        padding: '10px',
+        textAlign: 'center',
+        fontWeight: 'bold'
+      }}>
+        Ambiente actual: {import.meta.env.VITE_ENVIRONMENT || 'no definido'}
+      </div>
+      
       <section id="center">
         <div className="hero">
           <img src={heroImg} className="base" width="170" height="179" alt="" />
