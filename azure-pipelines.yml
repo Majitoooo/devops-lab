@@ -31,20 +31,24 @@ stages:
   dependsOn: CI
   condition: succeeded()
   jobs:
-  - job: DeployDEV
-    steps:
-    - task: DownloadBuildArtifacts@1
-      inputs:
-        buildType: 'current'
-        downloadType: 'single'
-        artifactName: 'app-dist'
-        downloadPath: '$(System.ArtifactsDirectory)'
-      displayName: "Descargar artefacto"
+  - deployment: DeployDEV
+    environment: 'DEV'
+    strategy:
+      runOnce:
+        deploy:
+          steps:
+          - task: DownloadBuildArtifacts@1
+            inputs:
+              buildType: 'current'
+              downloadType: 'single'
+              artifactName: 'app-dist'
+              downloadPath: '$(System.ArtifactsDirectory)'
+            displayName: "Descargar artefacto"
 
-    - task: AzureStaticWebApp@0
-      inputs:
-        cwd: '$(System.ArtifactsDirectory)/app-dist'
-        app_location: '/'
-        skip_app_build: true
-        azure_static_web_apps_api_token: '$(AZURE_STATIC_WEB_APPS_API_TOKEN)'
-      displayName: "Desplegar a Azure Static Web Apps"
+          - task: AzureStaticWebApp@0
+            inputs:
+              cwd: '$(System.ArtifactsDirectory)/app-dist'
+              app_location: '/'
+              skip_app_build: true
+              azure_static_web_apps_api_token: '$(AZURE_STATIC_WEB_APPS_API_TOKEN)'
+            displayName: "Desplegar a Azure Static Web Apps"
