@@ -43,7 +43,8 @@ stages:
 
     - task: AzureStaticWebApp@0
       inputs:
-        app_location: '$(System.ArtifactsDirectory)/app-dist'
+        cwd: '$(System.ArtifactsDirectory)/app-dist'
+        app_location: '/'
         skip_app_build: true
         azure_static_web_apps_api_token: '$(AZURE_STATIC_WEB_APPS_API_TOKEN)'
       displayName: "Desplegar a Azure Static Web Apps"
