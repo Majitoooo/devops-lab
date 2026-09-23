@@ -9,116 +9,71 @@ function App() {
 
   return (
     <>
-      <div style={{ backgroundColor: '#ffcc00', padding: '10px', textAlign: 'center', fontWeight: 'bold' }}>
-        Ambiente actual: __ENV_PLACEHOLDER__
+      <div className="env-banner">
+        Ambiente actual: <strong>__ENV_PLACEHOLDER__</strong>
       </div>
 
-      <section id="center">
-        <div className="hero">
-          <img src={heroImg} className="base" width="170" height="179" alt="" />
-          <img src={reactLogo} className="framework" alt="React logo" />
-          <img src={viteLogo} className="vite" alt="Vite logo" />
+      <header className="hero-header">
+        <div className="hero-logos">
+          <img src={reactLogo} className="logo-small" alt="React logo" />
+          <img src={viteLogo} className="logo-small" alt="Vite logo" />
         </div>
-        <div>
-          <h1>Laboratorio DevOps</h1>
+        <h1>Laboratorio DevOps</h1>
+        <p className="subtitle">
+          Pipeline CI/CD con Azure DevOps — React + Vite
+        </p>
+      </header>
+
+      <main className="content">
+        <section className="card">
+          <img src={heroImg} className="hero-img" alt="" />
+          <h2>Ciclo CI/CD completo</h2>
           <p>
-            Edit <code>src/App.jsx</code> and save to test <code>HMR</code>
+            Esta aplicación se construye una sola vez y se promueve a través
+            de tres ambientes: <strong>DEV</strong>, <strong>QA</strong> y{' '}
+            <strong>PDN</strong>, sin recompilar en ningún paso intermedio.
           </p>
-        </div>
-        <button
-          type="button"
-          className="counter"
-          onClick={() => setCount((count) => count + 1)}
-        >
-          Count is {count}
-        </button>
-      </section>
+        </section>
 
-      <div className="ticks"></div>
+        <section className="pipeline-steps">
+          <div className="step">
+            <span className="step-number">1</span>
+            <h3>Integración Continua</h3>
+            <p>Instalación, pruebas con Vitest y build del artefacto.</p>
+          </div>
+          <div className="step">
+            <span className="step-number">2</span>
+            <h3>Despliegue DEV / QA</h3>
+            <p>El mismo artefacto se promueve automáticamente.</p>
+          </div>
+          <div className="step">
+            <span className="step-number">3</span>
+            <h3>Aprobación PDN</h3>
+            <p>Control manual antes de llegar a producción.</p>
+          </div>
+        </section>
 
-      <section id="next-steps">
-        <div id="docs">
-          <svg className="icon" role="presentation" aria-hidden="true">
-            <use href="/icons.svg#documentation-icon"></use>
-          </svg>
-          <h2>Documentation</h2>
-          <p>Your questions, answered</p>
-          <ul>
-            <li>
-              <a href="https://vite.dev/" target="_blank">
-                <img className="logo" src={viteLogo} alt="" />
-                Explore Vite
-              </a>
-            </li>
-            <li>
-              <a href="https://react.dev/" target="_blank">
-                <img className="button-icon" src={reactLogo} alt="" />
-                Learn more
-              </a>
-            </li>
-          </ul>
-        </div>
-        <div id="social">
-          <svg className="icon" role="presentation" aria-hidden="true">
-            <use href="/icons.svg#social-icon"></use>
-          </svg>
-          <h2>Connect with us</h2>
-          <p>Join the Vite community</p>
-          <ul>
-            <li>
-              <a href="https://github.com/vitejs/vite" target="_blank">
-                <svg
-                  className="button-icon"
-                  role="presentation"
-                  aria-hidden="true"
-                >
-                  <use href="/icons.svg#github-icon"></use>
-                </svg>
-                GitHub
-              </a>
-            </li>
-            <li>
-              <a href="https://chat.vite.dev/" target="_blank">
-                <svg
-                  className="button-icon"
-                  role="presentation"
-                  aria-hidden="true"
-                >
-                  <use href="/icons.svg#discord-icon"></use>
-                </svg>
-                Discord
-              </a>
-            </li>
-            <li>
-              <a href="https://x.com/vite_js" target="_blank">
-                <svg
-                  className="button-icon"
-                  role="presentation"
-                  aria-hidden="true"
-                >
-                  <use href="/icons.svg#x-icon"></use>
-                </svg>
-                X.com
-              </a>
-            </li>
-            <li>
-              <a href="https://bsky.app/profile/vite.dev" target="_blank">
-                <svg
-                  className="button-icon"
-                  role="presentation"
-                  aria-hidden="true"
-                >
-                  <use href="/icons.svg#bluesky-icon"></use>
-                </svg>
-                Bluesky
-              </a>
-            </li>
-          </ul>
-        </div>
-      </section>
+        <section className="card counter-card">
+          <h3>Prueba de interactividad</h3>
+          <p>Estado local con React (useState), validado por pruebas unitarias.</p>
+          <button
+            type="button"
+            className="counter"
+            onClick={() => setCount((count) => count + 1)}
+          >
+            Contador: {count}
+          </button>
+        </section>
+      </main>
 
-      <div className="ticks"></div>
-      <section id="spacer"></section>
+      <footer className="footer">
+        <p>
+          Construido con{' '}
+          <a href="https://react.dev/" target="_blank" rel="noreferrer">React</a>
+          {' '}y{' '}
+          <a href="https://vite.dev/" target="_blank" rel="noreferrer">Vite</a>
+        </p>
+      </footer>
     </>
   )
 }
