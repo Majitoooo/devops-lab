@@ -20,7 +20,7 @@ function App() {
         </div>
         <h1>Laboratorio DevOps</h1>
         <p className="subtitle">
-          Pipeline CI/CD con Azure DevOps — React + Vite
+          Pipeline con Azure DevOps — React + Vite
         </p>
       </header>
 
