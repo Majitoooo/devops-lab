@@ -89,3 +89,35 @@ stages:
               skip_app_build: true
               azure_static_web_apps_api_token: '$(AZURE_STATIC_WEB_APPS_API_TOKEN_QA)'
             displayName: "Desplegar a Azure Static Web Apps QA"
+
+- stage: PDN
+  displayName: "Deploy PDN"
+  dependsOn: QA
+  condition: succeeded()
+  jobs:
+  - deployment: DeployPDN
+    environment: 'PDN'
+    strategy:
+      runOnce:
+        deploy:
+          steps:
+          - task: DownloadBuildArtifacts@1
+            inputs:
+              buildType: 'current'
+              downloadType: 'single'
+              artifactName: 'app-dist'
+              downloadPath: '$(System.ArtifactsDirectory)'
+            displayName: "Descargar artefacto"
+
+          - script: |
+              grep -rl "__ENV_PLACEHOLDER__" $(System.ArtifactsDirectory)/app-dist/assets/*.js | \
+              xargs sed -i 's/__ENV_PLACEHOLDER__/PDN/g'
+            displayName: "Reemplazar marcador de ambiente por PDN"
+
+          - task: AzureStaticWebApp@0
+            inputs:
+              cwd: '$(System.ArtifactsDirectory)/app-dist'
+              app_location: '/'
+              skip_app_build: true
+              azure_static_web_apps_api_token: '$(AZURE_STATIC_WEB_APPS_API_TOKEN_PDN)'
+            displayName: "Desplegar a Azure Static Web Apps PDN"
