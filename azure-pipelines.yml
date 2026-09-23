@@ -18,8 +18,6 @@ stages:
 
     - script: npm run build
       displayName: "Construir aplicación"
-      env:
-        VITE_ENVIRONMENT: 'DEV'
 
     - task: PublishBuildArtifacts@1
       inputs:
@@ -46,6 +44,11 @@ stages:
               artifactName: 'app-dist'
               downloadPath: '$(System.ArtifactsDirectory)'
             displayName: "Descargar artefacto"
+
+          - script: |
+              grep -rl "__ENV_PLACEHOLDER__" $(System.ArtifactsDirectory)/app-dist/assets/*.js | \
+              xargs sed -i 's/__ENV_PLACEHOLDER__/DEV/g'
+            displayName: "Reemplazar marcador de ambiente por DEV"
 
           - task: AzureStaticWebApp@0
             inputs:
