@@ -18,6 +18,8 @@ stages:
 
     - script: npm run build
       displayName: "Construir aplicación"
+      env:
+        VITE_ENVIRONMENT: 'DEV'
 
     - task: PublishBuildArtifacts@1
       inputs:
